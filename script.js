@@ -26,6 +26,9 @@ const choices = {
     spock: { name: "Spock", defeats: ["scissors", "rock"] },
 };
 
+let playerScoreNumber = 0;
+let computerScoreNumber = 0;
+
 let computerChoice = "";
 
 // Reset all 'selected' icons
@@ -40,11 +43,11 @@ function computerRandomChoice() {
     const computerChoiceNumber = Math.random();
     if (computerChoiceNumber < 0.2) {
         computerChoice = "rock";
-    } else if (computerChoice <= 0.4) {
+    } else if (computerChoiceNumber <= 0.4) {
         computerChoice = "paper";
-    } else if (computerChoice <= 0.6) {
+    } else if (computerChoiceNumber <= 0.6) {
         computerChoice = "scissors";
-    } else if (computerChoice <= 0.8) {
+    } else if (computerChoiceNumber <= 0.8) {
         computerChoice = "lizard";
     } else {
         computerChoice = "spock";
@@ -79,16 +82,35 @@ function displayComputerChoice() {
     }
 }
 
+// Check restult, increase score, updater resultText
+function updateScore(playerChoice) {
+    if (playerChoice === computerChoice) {
+        resultText.textContent = "It's a tie";
+    } else {
+        const choice = choices[playerChoice];
+        if (choice.defeats.indexOf(computerChoice) > -1) {
+            resultText.textContent = "You Won!";
+            playerScoreNumber++;
+            playerScoreEl.textContent = playerScoreNumber;
+        } else {
+            resultText.textContent = "You Lost!";
+            computerScoreNumber++;
+            computerScoreEl.textContent = computerScoreNumber;
+        }
+    }
+}
+
 // Call functions to process turn
-function checkResult() {
+function checkResult(playerChoice) {
     resetSelected();
     computerRandomChoice();
     displayComputerChoice();
+    updateScore(playerChoice);
 }
 
 // Passing player selection value and styling icons
 function select(playerChoice) {
-    checkResult();
+    checkResult(playerChoice);
     // Add 'selected' styling & playerChoice
     switch (playerChoice) {
         case "rock":
