@@ -1,8 +1,9 @@
+import { startConfetti, stopConfetti, removeConfetti } from "./confetti.js";
+
 const playerScoreEl = document.getElementById("playerScore");
 const playerChoiceEl = document.getElementById("playerChoice");
 const computerScoreEl = document.getElementById("computerScore");
 const computerChoiceEl = document.getElementById("computerChoice");
-const resultText = document.getElementById("resultText");
 
 const playerRock = document.getElementById("playerRock");
 const playerPaper = document.getElementById("playerPaper");
@@ -17,6 +18,7 @@ const computerLizard = document.getElementById("computerLizard");
 const computerSpock = document.getElementById("computerSpock");
 
 const allGameIcons = document.querySelectorAll(".far");
+const resultText = document.getElementById("resultText");
 
 const choices = {
     rock: { name: "Rock", defeats: ["scissors", "lizard"] },
@@ -28,17 +30,18 @@ const choices = {
 
 let playerScoreNumber = 0;
 let computerScoreNumber = 0;
-
 let computerChoice = "";
 
-// Reset all 'selected' icons
+// Reset all 'selected' icons, remove confetti
 function resetSelected() {
     allGameIcons.forEach((icon) => {
         icon.classList.remove("selected");
     });
+    stopConfetti();
+    removeConfetti();
 }
 
-// Reset Score & playerChoice/computerChoice
+// Reset score & playerChoice/computerChoice
 function resetAll() {
     playerScoreNumber = 0;
     computerScoreNumber = 0;
@@ -49,6 +52,7 @@ function resetAll() {
     resultText.textContent = "";
     resetSelected();
 }
+window.resetAll = resetAll;
 
 // Random computer choice
 function computerRandomChoice() {
@@ -66,7 +70,7 @@ function computerRandomChoice() {
     }
 }
 
-//Add 'selected' styling & computerChoice
+// Add 'selected' styling & computerChoice
 function displayComputerChoice() {
     switch (computerChoice) {
         case "rock":
@@ -94,13 +98,14 @@ function displayComputerChoice() {
     }
 }
 
-// Check restult, increase score, updater resultText
+// Check result, increase scores, update resultText
 function updateScore(playerChoice) {
     if (playerChoice === computerChoice) {
-        resultText.textContent = "It's a tie";
+        resultText.textContent = "It's a tie.";
     } else {
         const choice = choices[playerChoice];
         if (choice.defeats.indexOf(computerChoice) > -1) {
+            startConfetti();
             resultText.textContent = "You Won!";
             playerScoreNumber++;
             playerScoreEl.textContent = playerScoreNumber;
@@ -149,6 +154,7 @@ function select(playerChoice) {
             break;
     }
 }
+window.select = select;
 
 // On startup, set initial values
 resetAll();
