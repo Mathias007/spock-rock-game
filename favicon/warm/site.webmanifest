@@ -1,0 +1,22 @@
+{
+    "name": "Spock-Rock Game",
+    "short_name": "Spock-Rock",
+    "description": "Projekt rozszerzonej gry 'kamień - papier - nożyce', z pięcioma opcjami do wyboru, napisany w Javascript z użyciem modułów.",
+    "author": "Mateusz Mathias Stawowski",
+    "homepage_url": "https://github.com/Mathias007",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}
